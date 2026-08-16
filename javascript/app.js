@@ -657,7 +657,7 @@ function initializeProfileDropdown() {
                 // Dashboard is in root folder
 
                 window.location.href =
-                    "pages/signin.html";
+                    "pages/welcome.html";
 
             }
         );
