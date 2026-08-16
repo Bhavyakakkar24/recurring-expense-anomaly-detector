@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Anomalies - ExpenseGuard</title>
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- ANOMALY PAGE CSS -->
+    <link rel="stylesheet" href="../css/anomalies.css">
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- ==================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            Expense<span>Guard</span>
+        </div>
+
+
+        <div class="menu-title">
+            MAIN MENU
+        </div>
+
+
+        <a href="../dashboard.html" class="nav-item">
+
+            <span class="nav-icon">
+                ⌂
+            </span>
+
+            <span>
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <a href="transactions.html" class="nav-item">
+
+            <span class="nav-icon">
+                ₹
+            </span>
+
+            <span>
+                Transactions
+            </span>
+
+        </a>
+
+
+        <a href="anomalies.html" class="nav-item active">
+
+            <span class="nav-icon">
+                ⚠
+            </span>
+
+            <span>
+                Anomalies
+            </span>
+
+        </a>
+
+
+        <a href="categories.html" class="nav-item">
+
+            <span class="nav-icon">
+                ▣
+            </span>
+
+            <span>
+                Categories
+            </span>
+
+        </a>
+
+
+        <div class="menu-title">
+            SETTINGS
+        </div>
+
+
+        <a href="settings.html" class="nav-item">
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span>
+                Settings
+            </span>
+
+        </a>
+
+    </aside>
+
+
+
+    <!-- ==================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="main">
+
+
+        <!-- ==================================================
+             HEADER
+        ================================================== -->
+
+        <header class="header">
+
+            <div>
+
+                <h1>
+                    Anomaly Detection
+                </h1>
+
+                <p>
+                    Review expenses that differ significantly
+                    from your normal spending.
+                </p>
+
+            </div>
+
+
+            <div class="profile">
+
+                <strong>
+                    My Account
+                </strong>
+
+                <div class="profile-circle">
+                    BK
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ==================================================
+             SUMMARY CARDS
+        ================================================== -->
+
+        <section class="stats">
+
+
+            <!-- TOTAL ANOMALIES -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-title">
+                        Total Anomalies
+                    </div>
+
+                    <div class="stat-icon">
+                        ⚠
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="stat-value"
+                    id="totalAnomalies"
+                >
+                    0
+                </div>
+
+
+                <div class="stat-change warning">
+
+                    Requires attention
+
+                </div>
+
+            </div>
+
+
+
+            <!-- HIGHEST ANOMALY -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-title">
+                        Highest Anomaly
+                    </div>
+
+                    <div class="stat-icon">
+                        ₹
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="stat-value"
+                    id="highestAnomaly"
+                >
+                    ₹0
+                </div>
+
+
+                <div
+                    class="stat-change warning"
+                    id="highestAnomalyLabel"
+                >
+                    No anomalies
+                </div>
+
+            </div>
+
+
+
+            <!-- HIGHEST Z SCORE -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-title">
+                        Highest Z-Score
+                    </div>
+
+                    <div class="stat-icon">
+                        ↑
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="stat-value"
+                    id="highestZScore"
+                >
+                    0.00
+                </div>
+
+
+                <div
+                    class="stat-change warning"
+                    id="highestZScoreLabel"
+                >
+                    No anomalies
+                </div>
+
+            </div>
+
+
+
+            <!-- ANOMALY SPENDING -->
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-title">
+                        Anomaly Spending
+                    </div>
+
+                    <div class="stat-icon">
+                        ₹
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="stat-value"
+                    id="anomalySpending"
+                >
+                    ₹0
+                </div>
+
+
+                <div
+                    class="stat-change warning"
+                    id="anomalySpendingLabel"
+                >
+                    Across 0 transactions
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==================================================
+             DETECTED ANOMALIES
+        ================================================== -->
+
+        <section class="card anomaly-section">
+
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        ⚠ Detected Anomalies
+                    </h2>
+
+                    <p>
+                        Transactions with unusually high
+                        spending compared to your normal pattern.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!--
+
+                IMPORTANT:
+
+                JavaScript will automatically create
+                all anomaly boxes here.
+
+            -->
+
+            <div id="anomalyList">
+
+                <!-- Dynamic anomaly cards appear here -->
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==================================================
+             HOW DETECTION WORKS
+        ================================================== -->
+
+        <section class="card">
+
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        How Anomaly Detection Works
+                    </h2>
+
+                    <p>
+                        ExpenseGuard uses statistical analysis
+                        to identify unusual transactions.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="detection-steps">
+
+
+                <!-- STEP 1 -->
+
+                <div class="detection-step">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Calculate Average
+                        </strong>
+
+                        <p>
+                            Find the average spending for
+                            the selected category using
+                            historical transactions.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- STEP 2 -->
+
+                <div class="detection-step">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Calculate Standard Deviation
+                        </strong>
+
+                        <p>
+                            Measure how much expenses normally
+                            vary from the category average.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- STEP 3 -->
+
+                <div class="detection-step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Calculate Z-Score
+                        </strong>
+
+                        <p>
+                            Compare the new expense with the
+                            category's historical spending pattern.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- STEP 4 -->
+
+                <div class="detection-step">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Detect Anomaly
+                        </strong>
+
+                        <p>
+                            If the Z-score reaches or exceeds
+                            the threshold of 2.0, the transaction
+                            is flagged as an anomaly.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- ==================================================
+     TRANSACTION DETAILS MODAL
+================================================== -->
+
+<div
+    id="transactionModal"
+    class="transaction-modal"
+>
+
+
+    <div class="transaction-modal-content">
+
+
+        <!-- MODAL HEADER -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="modal-label">
+                    ANOMALOUS TRANSACTION
+                </span>
+
+                <h2 id="modalDescription">
+                    Transaction
+                </h2>
+
+            </div>
+
+
+            <button
+                class="modal-close"
+                onclick="closeTransactionModal()"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+
+        <!-- AMOUNT -->
+
+        <div class="modal-amount-section">
+
+            <span>
+                Transaction Amount
+            </span>
+
+            <strong id="modalAmount">
+                ₹0
+            </strong>
+
+        </div>
+
+
+
+        <!-- DETAILS -->
+
+        <div class="modal-details">
+
+
+            <div class="modal-detail">
+
+                <span>
+                    Category
+                </span>
+
+                <strong id="modalCategory">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="modal-detail">
+
+                <span>
+                    Date
+                </span>
+
+                <strong id="modalDate">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="modal-detail">
+
+                <span>
+                    Normal Average
+                </span>
+
+                <strong id="modalAverage">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <div class="modal-detail">
+
+                <span>
+                    Standard Deviation
+                </span>
+
+                <strong id="modalStd">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <div class="modal-detail">
+
+                <span>
+                    Z-Score
+                </span>
+
+                <strong
+                    class="modal-zscore"
+                    id="modalZScore"
+                >
+                    0.00
+                </strong>
+
+            </div>
+
+
+            <div class="modal-detail">
+
+                <span>
+                    Anomaly Threshold
+                </span>
+
+                <strong id="modalThreshold">
+                    2.00
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- WHY FLAGGED -->
+
+        <div class="modal-warning">
+
+
+            <div class="modal-warning-icon">
+                ⚠
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Why was this flagged?
+                </strong>
+
+                <p id="modalReason">
+                    -
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="modal-footer">
+
+            <button
+                class="modal-close-btn"
+                onclick="closeTransactionModal()"
+            >
+                Close
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+
+<script src="../javascript/app.js"></script>
+<script src="../javascript/anomalies.js"></script>
+
+
+</body>
+
+</html>
